@@ -1,5 +1,7 @@
+import 'package:firebaseauth/pages/home/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,29 +19,17 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerPassword = TextEditingController();
 
   Future<void> signInWithEmailAndPassword() async {
-    try {
-      await Auth().signInWithEmailAndPassword(
-        email: _controllerEmail.text,
-        password: _controllerPassword.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
-    }
+    BlocProvider.of<HomeBloc>(context).add(LoginEvent(
+      email: _controllerEmail.text,
+      password: _controllerPassword.text,
+    ));
   }
 
   Future<void> createUserWithEmailAndPassword() async {
-    try {
-      await Auth().createUserWithEmailAndPassword(
-        email: _controllerEmail.text,
-        password: _controllerPassword.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
-    }
+    BlocProvider.of<HomeBloc>(context).add(RegisterEvent(
+      email: _controllerEmail.text,
+      password: _controllerPassword.text,
+    ));
   }
 
   Widget _title() {
@@ -56,10 +46,6 @@ class _LoginPageState extends State<LoginPage> {
         labelText: title,
       ),
     );
-  }
-
-  Widget _errorMessage() {
-    return Text(errorMessage == '' ? '' : errorMessage!);
   }
 
   Widget _submitButton() {
@@ -87,21 +73,37 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: _title(),
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        padding: EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _entryField('email', _controllerEmail),
-            _entryField('password', _controllerPassword),
-            _errorMessage(),
-            _submitButton(),
-            _loginOrRegisterButton(),
-          ],
-        ),
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is HomeInitial) {
+            return Container(
+              height: double.infinity,
+              width: double.infinity,
+              padding: EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _entryField('email', _controllerEmail),
+                  _entryField('password', _controllerPassword),
+                  _submitButton(),
+                  _loginOrRegisterButton(),
+                ],
+              ),
+            );
+          }
+          if (state is LoginLoading || state is RegisterLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is LoginError) {
+            return Container(
+              child: Text(state.error),
+            );
+          }
+          return Container();
+        },
       ),
     );
   }

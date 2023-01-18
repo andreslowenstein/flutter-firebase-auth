@@ -24,6 +24,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetMemeEvent>(((event, emit) async {
       await getMemeEvent(event, emit);
     }));
+    on<LogoutEvent>(((event, emit) async {
+      await logoutEvent(event, emit);
+    }));
   }
 
   Future<void> loginEvent(LoginEvent event, Emitter emit) async {
@@ -65,6 +68,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> getMemeEvent(GetMemeEvent event, Emitter emit) async {
     try {
       emit(GetMemeLoading());
+
+      String meme = await _service.getMeme();
+
+      emit(HomeLoaded(meme: meme));
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> logoutEvent(LogoutEvent event, Emitter emit) async {
+    try {
+      emit(LoginLoading());
+
+      await Auth().signOut();
+
+      emit(HomeInitial());
     } catch (e) {
       throw e;
     }

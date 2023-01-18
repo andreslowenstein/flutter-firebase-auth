@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebaseauth/pages/bloc/home_bloc.dart';
-import 'package:firebaseauth/pages/login_register_page.dart';
+import 'package:firebaseauth/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: BlocProvider(
         create: (_) => HomeBloc(),
-        child: LoginPage(),
+        child: HomePage(),
       ),
     );
   }

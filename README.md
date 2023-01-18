@@ -20,11 +20,11 @@ Or you can run the app in your Android emulator directly.
 ## Screenshots
 
 <p float="left">
-  <img src="https://github.com/andreslowenstein/flutter-weather-forecast/blob/main/assets/app.png" width="300"> 
+  <img src="https://github.com/andreslowenstein/flutter-firebase-auth/blob/main/firebaseauth/assets/img1.png" width="300"> 
 </p>
 
 <p float="left">
-  <img src="https://github.com/andreslowenstein/flutter-weather-forecast/blob/main/assets/app.png" width="300"> 
+  <img src="https://github.com/andreslowenstein/flutter-firebase-auth/blob/main/firebaseauth/assets/img2.png" width="300"> 
 </p>
 
 ## Features/Tools

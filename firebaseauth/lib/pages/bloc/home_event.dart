@@ -29,4 +29,4 @@ class RegisterEvent extends HomeEvent {
 
 class LogoutEvent extends HomeEvent {}
 
-class GetMemes extends HomeEvent {}
+class GetMemeEvent extends HomeEvent {}

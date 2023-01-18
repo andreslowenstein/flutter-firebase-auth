@@ -18,12 +18,12 @@ class LoginError extends HomeState {
   LoginError(this.error);
 }
 
-class RegisterLoading extends HomeState {}
-
 class RegisterError extends HomeState {}
-
-class HomeLoaded extends HomeState {}
 
 class GetMemeLoading extends HomeState {}
 
-class GetMemeLoaded extends HomeState {}
+class HomeLoaded extends HomeState {
+  final String meme;
+
+  HomeLoaded({required this.meme});
+}

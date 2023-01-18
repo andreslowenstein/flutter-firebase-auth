@@ -1,70 +1,26 @@
-import 'package:firebaseauth/pages/home/home_bloc.dart';
+import 'package:firebaseauth/pages/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../auth.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
+class LoginPage extends StatelessWidget {
   String? errorMessage = '';
   bool isLogin = true;
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
 
-  Future<void> signInWithEmailAndPassword() async {
+  Future<void> signInWithEmailAndPassword(BuildContext context) async {
     BlocProvider.of<HomeBloc>(context).add(LoginEvent(
       email: _controllerEmail.text,
       password: _controllerPassword.text,
     ));
   }
 
-  Future<void> createUserWithEmailAndPassword() async {
+  Future<void> createUserWithEmailAndPassword(BuildContext context) async {
     BlocProvider.of<HomeBloc>(context).add(RegisterEvent(
       email: _controllerEmail.text,
       password: _controllerPassword.text,
     ));
-  }
-
-  Widget _title() {
-    return Text('Firebase Auth');
-  }
-
-  Widget _entryField(
-    String title,
-    TextEditingController controller,
-  ) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: title,
-      ),
-    );
-  }
-
-  Widget _submitButton() {
-    return ElevatedButton(
-      onPressed:
-          isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
-      child: Text(isLogin ? 'Login' : 'Register'),
-    );
-  }
-
-  Widget _loginOrRegisterButton() {
-    return TextButton(
-      onPressed: () {
-        setState(() {
-          isLogin = !isLogin;
-        });
-      },
-      child: Text(isLogin ? 'Register instead' : 'Login instead'),
-    );
   }
 
   @override
@@ -86,13 +42,13 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   _entryField('email', _controllerEmail),
                   _entryField('password', _controllerPassword),
-                  _submitButton(),
-                  _loginOrRegisterButton(),
+                  _submitButton(context),
+                  // _loginOrRegisterButton(),
                 ],
               ),
             );
           }
-          if (state is LoginLoading || state is RegisterLoading) {
+          if (state is LoginLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -102,9 +58,54 @@ class _LoginPageState extends State<LoginPage> {
               child: Text(state.error),
             );
           }
+          if (state is HomeLoaded) {
+            return Column(
+              children: [
+                Text("Logged in!"),
+                Column(
+                  children: [
+                    Image.network(state.meme),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextButton(
+                      onPressed: () => BlocProvider.of<HomeBloc>(context)
+                          .add(GetMemeEvent()),
+                      child: Text("Generate meme"),
+                    )
+                  ],
+                ),
+              ],
+            );
+          }
           return Container();
         },
       ),
+    );
+  }
+
+  Widget _title() {
+    return Text('Firebase Auth');
+  }
+
+  Widget _entryField(
+    String title,
+    TextEditingController controller,
+  ) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: title,
+      ),
+    );
+  }
+
+  Widget _submitButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => isLogin
+          ? signInWithEmailAndPassword(context)
+          : createUserWithEmailAndPassword(context),
+      child: Text("asd"),
     );
   }
 }

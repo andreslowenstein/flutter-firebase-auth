@@ -4,6 +4,8 @@ This project is a simple app for test the Firebase Authentication for Android de
 
 When you're logged in, you can see and generate random memes from Reddit.
 
+BLoC pattern used for state management.
+
 Developed by Andrés Lowenstein.
 
 ## Usage:

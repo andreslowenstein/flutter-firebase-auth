@@ -73,7 +73,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       emit(LoginLoading());
 
-      var culo = await Auth().signInWithGoogle();
+      var user = await Auth().signInWithGoogle();
 
       String meme = await _service.getMeme();
 

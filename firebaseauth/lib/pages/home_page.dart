@@ -112,43 +112,45 @@ class _HomePageState extends State<HomePage> {
           if (state is HomeLoaded) {
             return Padding(
               padding: EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  Text(
-                    "Logged in!",
-                    style: TextStyle(color: Colors.white, fontSize: 19),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Column(
-                    children: [
-                      Image.network(state.meme),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextButton(
-                        onPressed: () => BlocProvider.of<HomeBloc>(context)
-                            .add(GetMemeEvent()),
-                        child: Text(
-                          "Generate meme",
-                          style: TextStyle(color: Colors.white, fontSize: 19),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      "Logged in!",
+                      style: TextStyle(color: Colors.white, fontSize: 19),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Column(
+                      children: [
+                        Image.network(state.meme),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextButton(
-                        onPressed: () => BlocProvider.of<HomeBloc>(context)
-                            .add(LogoutEvent()),
-                        child: Text(
-                          "Logout",
-                          style: TextStyle(color: Colors.white, fontSize: 19),
+                        TextButton(
+                          onPressed: () => BlocProvider.of<HomeBloc>(context)
+                              .add(GetMemeEvent()),
+                          child: Text(
+                            "Generate meme",
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
                         ),
-                      )
-                    ],
-                  ),
-                ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextButton(
+                          onPressed: () => BlocProvider.of<HomeBloc>(context)
+                              .add(LogoutEvent()),
+                          child: Text(
+                            "Logout",
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           }
@@ -173,6 +175,15 @@ class _HomePageState extends State<HomePage> {
         enabledBorder: OutlineInputBorder(
           borderSide:
               BorderSide(color: Color.fromARGB(255, 199, 199, 199), width: 1.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide:
+              BorderSide(color: Color.fromARGB(255, 199, 199, 199), width: 1.5),
+        ),
+        fillColor: Colors.white,
+        labelStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

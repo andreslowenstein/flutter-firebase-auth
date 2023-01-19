@@ -30,6 +30,10 @@ class _HomePageState extends State<HomePage> {
     ));
   }
 
+  Future<void> signInWithGoogle(BuildContext context) async {
+    BlocProvider.of<HomeBloc>(context).add(SignInWithGoogleEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +72,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     _submitButton(context, "0", "Login"),
                     _submitButton(context, "1", "Register"),
+                    _submitButton(context, "2", "Sign in with Google")
                   ],
                 ),
               ),
@@ -197,9 +202,11 @@ class _HomePageState extends State<HomePage> {
         child: MaterialButton(
           color: Color(0xFF7646e0),
           textColor: Colors.white,
-          onPressed: () => option == "0"
-              ? signInWithEmailAndPassword(context)
-              : createUserWithEmailAndPassword(context),
+          onPressed: () {
+            if (option == "0") signInWithEmailAndPassword(context);
+            if (option == "1") createUserWithEmailAndPassword(context);
+            if (option == "2") signInWithGoogle(context);
+          },
           child: Text(title),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(

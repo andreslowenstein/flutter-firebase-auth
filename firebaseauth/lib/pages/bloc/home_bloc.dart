@@ -21,6 +21,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<RegisterEvent>((event, emit) async {
       await registerEvent(event, emit);
     });
+    on<SignInWithGoogleEvent>(((event, emit) async {
+      await signInWithGoogleEvent(event, emit);
+    }));
     on<GetMemeEvent>(((event, emit) async {
       await getMemeEvent(event, emit);
     }));
@@ -55,6 +58,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         email: event.email,
         password: event.password,
       );
+      String meme = await _service.getMeme();
+
+      emit(HomeLoaded(meme: meme));
+    } on FirebaseAuthException catch (e) {
+      emit(LoginError(e.message!));
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> signInWithGoogleEvent(
+      SignInWithGoogleEvent event, Emitter emit) async {
+    try {
+      emit(LoginLoading());
+
+      var culo = await Auth().signInWithGoogle();
+
       String meme = await _service.getMeme();
 
       emit(HomeLoaded(meme: meme));

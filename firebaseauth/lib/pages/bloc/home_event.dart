@@ -27,6 +27,8 @@ class RegisterEvent extends HomeEvent {
   });
 }
 
+class SignInWithGoogleEvent extends HomeEvent {}
+
 class LogoutEvent extends HomeEvent {}
 
 class GetMemeEvent extends HomeEvent {}

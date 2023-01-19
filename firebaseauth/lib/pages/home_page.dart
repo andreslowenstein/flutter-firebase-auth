@@ -169,10 +169,7 @@ class _HomePageState extends State<HomePage> {
     return Text('Firebase Auth');
   }
 
-  Widget _entryField(
-    String title,
-    TextEditingController controller,
-  ) {
+  Widget _entryField(String title, TextEditingController controller) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(

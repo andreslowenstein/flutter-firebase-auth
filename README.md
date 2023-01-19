@@ -33,6 +33,7 @@ Or you can run the app in your Android emulator directly.
 
 - State Management (BLoC): https://pub.dev/packages/flutter_bloc | https://pub.dev/packages/bloc
 - Firebase Core | Firebase Auth: https://pub.dev/packages/firebase_core | https://pub.dev/packages/firebase_auth
+- Google Sign In: https://pub.dev/packages/google_sign_in
 
 ## Author
 
